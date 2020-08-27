@@ -1,8 +1,8 @@
 <template>
     <div class="index">
-        <image class="bg-image" :src="background"/>
+        <image class="bg-image" :src="info.background"/>
         <div class="bg-swiper">
-            <index-swiper :list="list"></index-swiper>
+            <index-swiper :list="list" :info="info"></index-swiper>
         </div>
         <div class="bg_music" v-if="isPlay" @tap="audioPlay">
             <image src="../../static/images/music_icon.png" class="musicImg music_icon"/>
@@ -27,8 +27,8 @@ export default {
     return {
       isPlay: false,
       list: [],
-      audioCtx: '',
-      background: ''
+      info: {},
+      audioCtx: ''
     }
   },
   onLoad () {
@@ -39,7 +39,7 @@ export default {
     const db = wx.cloud.database()
     const common = db.collection('common')
     common.get().then(res => {
-      this.background = res.data[0].background
+      this.info = res.data[0]
     })
   },
   onShow () {
@@ -72,7 +72,7 @@ export default {
     getList () {
       const that = this
       const db = wx.cloud.database()
-      const banner = db.collection('banner')
+      const banner = db.collection('indexBanner')
       banner.get().then(res => {
         let list = []
         let animations = [
@@ -83,10 +83,10 @@ export default {
           'jackInTheBox',
           'flip'
         ]
-        for (let i = 0; i < res.data[0].bannerList.length; i++) {
+        for (let i = 0; i < res.data[0].indexBanner.length; i++) {
           let show = i === 0
           list.push({
-            url: res.data[0].bannerList[i],
+            url: res.data[0].indexBanner[i],
             show: show,
             class: animations[i]
           })

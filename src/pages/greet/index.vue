@@ -10,7 +10,7 @@
                 <p>{{item.user.nickName}}</p>
             </div>
         </scroll-view>
-        <p class="count">已收到{{userList.length}}位好友送来的祝福</p>
+        <p class="count">已收到{{userList.length}}位亲友送来的祝福</p>
         <div class="bottom">
             <button class="left" lang="zh_CN" open-type="getUserInfo" @getuserinfo="sendGreet">送上祝福</button>
             <button class="right" open-type="share">分享喜悦</button>
@@ -32,6 +32,11 @@ export default {
   onShow () {
     const that = this
     that.getUserList()
+  },
+  onShareAppMessage: function (res) {
+    return {
+      path: '/pages/index/main'
+    }
   },
   methods: {
     sendGreet (e) {

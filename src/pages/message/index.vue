@@ -89,15 +89,15 @@ export default {
   },
   computed: {
     isAdmin: function () {
-      return this.openId === 'o2g_z5Bccke5PW_JIUCB9_LOTV48'
+      return this.openId === 'os3Ie5HcxShrBhssHtagU4UoQmVw'
     }
   },
   methods: {
     getVideoUrl () {
       const that = this
       const db = wx.cloud.database()
-      const common = db.collection('common')
-      common.get().then(res => {
+      const video = db.collection('video')
+      video.get().then(res => {
         that.url = res.data[0].videoUrl
         that.poster = res.data[0].poster
       })

@@ -27,12 +27,12 @@
             <div class="animate-ele animated fadeInRight" style="left: 0; animation-duration: 1.5s; animation-delay: 1.8s">
               <div class="info">
                 <div class="content">
-                  <h6>Mr.Z & Miss.Q</h6>
-                  <p>谨定于 2019年10月01日 （星期二）中午11:30</p>
-                  <p>农历 九月初三 中午十一点半 举办婚礼</p>
-                  <p>席设：顺庭龙庄中一厅</p>
-                  <p>地址：成都市新都区临河街与荣德路交叉口</p>
-                  <image src="../../static/images/we.png" class="img_footer"/>
+                  <h6>{{ info.title }}</h6>
+                  <p>谨定于 {{ info.date1 }}</p>
+                  <p>农历 {{ info.date2 }}</p>
+                  <p>饭店：{{ info.hotel }}</p>
+                  <p>地址：{{ info.address }}</p>
+                  <!-- <image src="../../static/images/we.png" class="img_footer"/> -->
                 </div>
               </div>
             </div>
@@ -112,7 +112,7 @@
 <script>
 export default {
   name: 'GoodSwiper',
-  props: ['list'],
+  props: ['list', 'info'],
   data () {
     return {
       showOverlay0: true,
@@ -183,7 +183,8 @@ export default {
       justify-content flex-start
       align-items center
       position relative
-      padding-bottom 30rpx
+      padding-top 15rpx
+      padding-bottom 15rpx
       h1
         font-size 50rpx
         height 100rpx

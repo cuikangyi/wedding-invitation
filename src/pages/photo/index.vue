@@ -37,13 +37,13 @@ export default {
     getList () {
       const that = this
       const db = wx.cloud.database()
-      const banner = db.collection('indexBanner')
+      const banner = db.collection('photoBanner')
       banner.get().then(res => {
         let list = []
-        for (let i = 0; i < res.data[0].indexBanner.length; i++) {
+        for (let i = 0; i < res.data[0].photoBanner.length; i++) {
           let show = i === 0
           list.push({
-            url: res.data[0].indexBanner[i],
+            url: res.data[0].photoBanner[i],
             show: show
           })
         }

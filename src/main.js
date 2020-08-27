@@ -16,6 +16,10 @@ app.$mount()
 Vue.prototype.globalData = getApp().globalData
 let innerAudioContext = wx.createInnerAudioContext()
 innerAudioContext.autoplay = true
+wx.setInnerAudioOption({
+  autoplay: true,
+  obeyMuteSwitch: false
+})
 app.globalData.innerAudioContext = innerAudioContext
 app.globalData.musics = []
 app.globalData.index = 1

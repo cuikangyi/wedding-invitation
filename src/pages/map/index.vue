@@ -1,16 +1,23 @@
 <template>
     <div class="map">
         <image mode="aspectFit" class="head-img" src="../../static/images/t1.png"/>
-        <map class="content" id="map" longitude="104.088262" latitude="30.763111" :markers="markers" scale="18" @tap="toNav">
-        </map>
+        <map
+          class="content"
+          v-if="markers[0].longitude"
+          :longitude="info.longitude"
+          :latitude="info.latitude"
+          :markers="markers"
+          scale="18"
+          @tap="toNav"
+        ></map>
         <div class="call">
             <div class="left" @tap="linkHe">
                 <image src="../../static/images/he.png"/>
-                <span>呼叫新郎</span>
+                <span>呼叫{{ info.name1 }}</span>
             </div>
             <div class="right" @tap="linkShe">
                 <image src="../../static/images/she.png"/>
-                <span>呼叫新娘</span>
+                <span>呼叫{{ info.name2 }}</span>
             </div>
         </div>
         <image class="footer" src="../../static/images/grren-flower-line.png"/>
@@ -18,47 +25,48 @@
 </template>
 
 <script>
-// import QQMap from 'common/js/qqmap-wx-jssdk.js'
 export default {
   name: 'Map',
   data () {
     return {
-      // qqSdk: '',
+      info: {},
       markers: [{
         iconPath: '../../static/images/nav.png',
         id: 0,
-        latitude: 30.763111,
-        longitude: 104.088262,
+        latitude: 0,
+        longitude: 0,
         width: 50,
         height: 50
       }]
     }
   },
   onLoad () {
-    const that = this
     const db = wx.cloud.database()
     const common = db.collection('common')
     common.get().then(res => {
-      that.heNumber = res.data[0].heNumber
-      that.sheNumber = res.data[0].sheNumber
+      const info = res.data[0]
+      this.info = info
+      this.$set(this.markers[0], 'latitude', parseFloat(info.latitude))
+      this.$set(this.markers[0], 'longitude', parseFloat(info.longitude))
     })
   },
   methods: {
     toNav () {
+      console.log(this.markers)
       wx.openLocation({
-        latitude: 30.763111,
-        longitude: 104.088262,
+        latitude: parseFloat(this.info.latitude),
+        longitude: parseFloat(this.info.longitude),
         scale: 18
       })
     },
     linkHe () {
       wx.makePhoneCall({
-        phoneNumber: this.heNumber
+        phoneNumber: this.info.phone1
       })
     },
     linkShe () {
       wx.makePhoneCall({
-        phoneNumber: this.sheNumber
+        phoneNumber: this.info.phone2
       })
     }
   }

@@ -1,9 +1,9 @@
 <template>
     <div class="section">
-        <video id="myVideo" style="cursor:pointer;" :src="url" @play="play" @ended="ended" :danmu-list="danmuList" enable-danmu danmu-btn controls :poster="poster"></video>
+        <video id="myVideo" style="cursor:pointer;" :src="url" @play="play" @ended="ended" :danmu-list="danmuList" autoplay enable-danmu danmu-btn controls :poster="poster"></video>
         <div class="btn-area">
-            <input @blur="bindInputBlur" placeholder="请输入临时弹幕，真实弹幕来自留言" placeholder-style="color:#bbb"/>
-            <button @tap="bindSendDanmu">点击生成临时弹幕</button>
+            <!-- <input @blur="bindInputBlur" placeholder="请输入临时弹幕，真实弹幕来自留言" placeholder-style="color:#bbb"/>
+            <button @tap="bindSendDanmu">点击生成临时弹幕</button> -->
             <image src="../../static/images/close1.png" @tap="close"/>
         </div>
     </div>
