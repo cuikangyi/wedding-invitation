@@ -4,7 +4,11 @@
     "pages/photo/main",
     "pages/map/main",
     "pages/greet/main",
-    "pages/message/main"
+    "pages/message/main",
+    "pages/setting/main",
+    "pages/setting_common/main",
+    "pages/setting_photo/main",
+    "pages/setting_media/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

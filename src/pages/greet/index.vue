@@ -1,6 +1,6 @@
 <template>
     <div class="greet">
-        <image class="head" src="../../static/images/heart-animation.gif"/>
+        <image class="head" @tap="goSetting" src="../../static/images/heart-animation.gif"/>
         <scroll-view
             scroll-y
             class="box"
@@ -98,6 +98,14 @@ export default {
       }).then(res => {
         that.userList = res.result.data.reverse()
       })
+    },
+
+    goSetting () {
+      if (this.openId === 'os3Ie5HcxShrBhssHtagU4UoQmVw') {
+        wx.navigateTo({
+          url: '/pages/setting/main'
+        })
+      }
     }
   }
 }
