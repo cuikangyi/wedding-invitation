@@ -1,6 +1,6 @@
 <template>
     <div class="index">
-        <image class="bg-image" :src="info.background"/>
+        <image class="bg-image" :src="background"/>
         <div class="bg-swiper">
             <index-swiper :list="list" :info="info"></index-swiper>
         </div>
@@ -28,6 +28,7 @@ export default {
       isPlay: false,
       list: [],
       info: {},
+      background: '',
       audioCtx: ''
     }
   },
@@ -40,6 +41,10 @@ export default {
     const common = db.collection('common')
     common.get().then(res => {
       this.info = res.data[0]
+    })
+    const media = db.collection('media')
+    media.get().then(res => {
+      this.background = res.data[0].background
     })
   },
   onShow () {
@@ -72,7 +77,7 @@ export default {
     getList () {
       const that = this
       const db = wx.cloud.database()
-      const banner = db.collection('indexBanner')
+      const banner = db.collection('photo')
       banner.get().then(res => {
         let list = []
         let animations = [
@@ -83,10 +88,10 @@ export default {
           'jackInTheBox',
           'flip'
         ]
-        for (let i = 0; i < res.data[0].indexBanner.length; i++) {
+        for (let i = 0; i < res.data[0].index.length; i++) {
           let show = i === 0
           list.push({
-            url: res.data[0].indexBanner[i],
+            url: res.data[0].index[i],
             show: show,
             class: animations[i]
           })
@@ -97,7 +102,7 @@ export default {
     getMusicUrl () {
       const that = this
       const db = wx.cloud.database()
-      const music = db.collection('music')
+      const music = db.collection('media')
       music.get().then(res => {
         that.globalData.innerAudioContext.src = res.data[0].musicUrl
         that.audioCtx.play()

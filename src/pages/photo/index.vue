@@ -16,8 +16,8 @@ export default {
   onLoad () {
     this.getList()
     const db = wx.cloud.database()
-    const common = db.collection('common')
-    common.get().then(res => {
+    const media = db.collection('media')
+    media.get().then(res => {
       this.background = res.data[0].background
     })
   },
@@ -37,13 +37,13 @@ export default {
     getList () {
       const that = this
       const db = wx.cloud.database()
-      const banner = db.collection('photoBanner')
+      const banner = db.collection('photo')
       banner.get().then(res => {
         let list = []
-        for (let i = 0; i < res.data[0].photoBanner.length; i++) {
+        for (let i = 0; i < res.data[0].photo.length; i++) {
           let show = i === 0
           list.push({
-            url: res.data[0].photoBanner[i],
+            url: res.data[0].photo[i],
             show: show
           })
         }

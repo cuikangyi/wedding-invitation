@@ -96,8 +96,8 @@ export default {
     getVideoUrl () {
       const that = this
       const db = wx.cloud.database()
-      const video = db.collection('video')
-      video.get().then(res => {
+      const media = db.collection('media')
+      media.get().then(res => {
         that.url = res.data[0].videoUrl
         that.poster = res.data[0].poster
       })
