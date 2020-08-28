@@ -63,15 +63,15 @@ const uploadImg = filePaths => {
       return uploadFile(cloudPath, path)
         .then(id => {
           wx.showLoading({
-            title: `正在上传第${i + 2}张图片`,
+            title: `正在上传第${i + 1}张图片`,
             mask: true
           })
           ids.push(id)
         })
         .catch(_ => {
-          wx.showLoading({
-            title: `正在上传第${i + 2}张图片`,
-            mask: true
+          wx.showToast({
+            title: `error`,
+            icon: 'none'
           })
         })
     })
@@ -79,33 +79,10 @@ const uploadImg = filePaths => {
 
   // 获取真实链接地址
   resolve = resolve.then(() => {
-    return getUrl(ids)
-  })
-  // 存储数据库
-  let page = getCurrentPages()
-  page = page[page.length - 1]
-  const { $photos } = page.data
-  resolve = resolve.then(res => {
-    // eslint-disable-next-line prefer-promise-reject-errors
-    if (!res.length) return Promise.reject('上传失败')
-    $photos.push(...res)
-    return $photos
+    wx.hideLoading()
+    return ids
   })
 
-  // 返回数据
-  resolve = resolve
-    .then(() => {
-      wx.hideLoading()
-      return $photos
-    })
-    .catch(err => {
-      wx.hideLoading()
-      wx.showToast({
-        title: err,
-        icon: 'none'
-      })
-      return Promise.reject(err)
-    })
   return resolve
 }
 
