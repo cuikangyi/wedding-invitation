@@ -23,21 +23,22 @@
         </scroll-view>
         <div class="bottom">
             <button class="left" lang="zh_CN" open-type="getUserInfo" @getuserinfo="toMessage">说点啥吧</button>
-            <button class="right" open-type="getUserInfo" @getuserinfo="toForm">我要出席</button>
+            <!-- <button class="right" open-type="getUserInfo" @getuserinfo="toForm">我要出席</button> -->
         </div>
         <div class="dialog" v-show="isOpen">
-            <textarea focus="true" maxlength="80" class="desc" placeholder="在这里输入您想要说的话" name="textarea" placeholder-style="color:#ccc;" v-model="desc"/>
+            <textarea disabled maxlength="80" class="desc" name="textarea" placeholder-style="color:#ccc;" v-model="desc"/>
             <div class="btn">
                 <button class="left" @tap="sendMessage">发送留言</button>
+                <button class="right" @tap="changeMessage">换一个</button>
                 <button class="right" @tap="cancel">取消</button>
             </div>
         </div>
-        <div class="video-dialog"  @tap="toVideo" v-if="url !== '' && url !== undefined">
+        <div class="video-dialog" @tap="toVideo" v-if="url !== '' && url !== undefined">
             <image src="../../static/images/video1.png"/>
         </div>
-        <div class="form-dialog" @tap="lookList">
+        <!-- <div class="form-dialog" @tap="lookList">
             <image src="../../static/images/form.png"/>
-        </div>
+        </div> -->
         <div class="video" v-if="isVideo">
             <h-video @closeVideo="closeVideo" :url="url" :poster="poster"></h-video>
         </div>
@@ -67,6 +68,7 @@ export default {
       isOpen: false,
       desc: '',
       messageList: [],
+      messageTemplate: '',
       openId: '',
       userInfo: '',
       isForm: false,
@@ -100,6 +102,7 @@ export default {
       media.get().then(res => {
         that.url = res.data[0].videoUrl
         that.poster = res.data[0].poster
+        that.messageTemplate = res.data[0].message
       })
     },
     toMessage (e) {
@@ -108,6 +111,7 @@ export default {
         wx.getUserInfo({
           success: function (res) {
             that.userInfo = res.userInfo
+            that.changeMessage()
             that.isOpen = true
             that.getOpenId()
           }
@@ -118,6 +122,13 @@ export default {
     cancel () {
       const that = this
       that.isOpen = false
+    },
+
+    changeMessage () {
+      const temps = this.messageTemplate.split('\n').filter(function (s) {
+        return s && s.trim()
+      })
+      this.desc = temps[Math.floor(Math.random() * temps.length)] || ''
     },
 
     sendMessage () {
@@ -438,7 +449,7 @@ export default {
         background #fff
         width 100%
         textarea
-            height 200rpx
+            height 100rpx
             line-height 42rpx
             font-size 30rpx
             color #333

@@ -16,8 +16,8 @@
       </div>
       <div class="btn border shadow upload" @tap="upload('photo')">上传列表照片</div>
       <div class="tips">每次上传图片张数越少越好 以免上传失败</div>
-      <div class="tips mar-b40">点击单张图片可以进行移动或删除</div>
-      <div class="tips mar-b40">首页仅显示前6张图片</div>
+      <div class="tips">点击单张图片可以进行移动或删除</div>
+      <div class="tips">首页仅显示前6张图片</div>
     </div>
   </div>
 </template>

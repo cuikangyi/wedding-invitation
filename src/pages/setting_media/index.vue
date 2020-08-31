@@ -1,18 +1,23 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="btn" @tap="chooseBackground">选择背景图</div>
       <div class="bg-img">
         <image :src="background" mode="heightFix"></image>
       </div>
+      <div class="btn" @tap="chooseBackground">选择背景图</div>
     </div>
     <div class="row">
-      <div class="btn" @tap="chooseMusic">选择音乐</div>
       <text user-select>{{ musicUrl }}</text>
+      <div class="btn" @tap="chooseMusic">选择音乐</div>
     </div>
     <div class="row">
+      <text user-select>{{ videoUrl || '已隐藏' }}</text>
       <div class="btn" @tap="chooseVideo">是否显示视频</div>
-      <text user-select>{{ videoUrl }}</text>
+    </div>
+    <div class="row">
+      <textarea class="msg-template" v-model="message"></textarea>
+      <div class="btn" @tap="saveMessage">保存评论模板</div>
+      <div class="tips">按行分割</div>
     </div>
   </div>
 </template>
@@ -27,7 +32,8 @@ export default {
       _id: '',
       background: '',
       musicUrl: '',
-      videoUrl: ''
+      videoUrl: '',
+      message: ''
     }
   },
   onLoad () {
@@ -39,6 +45,7 @@ export default {
       this.background = data.background
       this.musicUrl = data.musicUrl
       this.videoUrl = data.videoUrl
+      this.message = data.message
     })
   },
   methods: {
@@ -95,6 +102,12 @@ export default {
       this.saveData({
         videoUrl
       })
+    },
+
+    saveMessage () {
+      this.saveData({
+        message: this.message
+      })
     }
   }
 }
@@ -118,8 +131,16 @@ export default {
   margin: 20rpx auto;
   background: #eee;
 }
+.tips{
+  text-align: center;
+  font-size: 20rpx;
+}
 .bg-img{
   display: flex;
   justify-content: center;
+}
+.msg-template{
+  background: #eee;
+  width: 100%;
 }
 </style>

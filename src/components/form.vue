@@ -21,7 +21,7 @@
         <p class="title">
             备注
         </p>
-        <textarea focus="true" maxlength="80" class="desc" placeholder="请填写您的备注需求" name="textarea" placeholder-style="color:#ccc;" v-model="desc"/>
+        <textarea maxlength="80" class="desc" placeholder="请填写您的备注需求" name="textarea" placeholder-style="color:#ccc;" v-model="desc"/>
         <div class="btn">
             <button class="left" @tap="submit">确认提交</button>
             <button class="right" @tap="cancel">取消</button>
