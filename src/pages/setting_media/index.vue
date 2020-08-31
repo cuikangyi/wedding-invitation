@@ -1,15 +1,17 @@
 <template>
   <div class="container">
     <div class="row">
-      <button class="btn" @tap="chooseBackground">选择背景图</button>
-      <image :src="background" mode="heightFix"></image>
+      <div class="btn" @tap="chooseBackground">选择背景图</div>
+      <div class="bg-img">
+        <image :src="background" mode="heightFix"></image>
+      </div>
     </div>
     <div class="row">
-      <button class="btn" @tap="chooseMusic">选择音乐</button>
+      <div class="btn" @tap="chooseMusic">选择音乐</div>
       <text user-select>{{ musicUrl }}</text>
     </div>
     <div class="row">
-      <button class="btn" @tap="chooseVideo">是否显示视频</button>
+      <div class="btn" @tap="chooseVideo">是否显示视频</div>
       <text user-select>{{ videoUrl }}</text>
     </div>
   </div>
@@ -114,8 +116,10 @@ export default {
   border-radius: 80rpx;
   text-align: center;
   margin: 20rpx auto;
+  background: #eee;
 }
-button::after{
-  border: none;
+.bg-img{
+  display: flex;
+  justify-content: center;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <button class="setting-btn" @tap="goSettingCommon">信息设置</button>
-    <button class="setting-btn" @tap="goSettingPhoto">照片设置</button>
-    <button class="setting-btn" @tap="goSettingMedia">媒体设置</button>
+    <div class="setting-btn" @tap="goSettingCommon">信息设置</div>
+    <div class="setting-btn" @tap="goSettingPhoto">照片设置</div>
+    <div class="setting-btn" @tap="goSettingMedia">媒体设置</div>
   </div>
 </template>
 
@@ -45,8 +45,6 @@ export default {
   text-align: center;
   font-size: 40rpx;
   margin: 50rpx 60rpx;
-}
-button::after{
-  border: none;
+  background: #eee;
 }
 </style>

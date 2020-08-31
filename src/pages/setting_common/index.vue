@@ -49,7 +49,7 @@
       <input type="text" class="input" v-model="longitude"/>
     </div>
     <div class="row">
-      <button class="submit" @tap="submit">修改信息</button>
+      <div class="submit" @tap="submit">修改信息</div>
     </div>
   </div>
 </template>
@@ -154,8 +154,6 @@ export default {
   border-radius: 80rpx;
   text-align: center;
   margin: 20rpx auto;
-}
-button::after{
-  border: none;
+  background: #eee;
 }
 </style>
