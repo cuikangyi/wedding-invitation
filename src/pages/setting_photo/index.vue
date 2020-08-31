@@ -2,7 +2,7 @@
   <div class="container">
     <div>
       <div class="photo-wrap flex-multi-row">
-        <div v-for="(item, i) in index" class="photo-item border shadow" :key="i" @tap="del('index', item)">
+        <div v-for="(item, i) in index" class="photo-item border shadow" :key="i" @tap="tapImg('index', item)">
           <image class="photo" :src="item" mode="aspectFill"></image>
         </div>
       </div>
@@ -10,13 +10,14 @@
     </div>
     <div>
       <div class="photo-wrap flex-multi-row">
-        <div v-for="(item, i) in photo" class="photo-item border shadow" :key="i" @tap="del('photo', item)">
+        <div v-for="(item, i) in photo" class="photo-item border shadow" :key="i" @tap="tapImg('photo', item)">
           <image class="photo" :src="item" mode="aspectFill"></image>
         </div>
       </div>
       <div class="btn border shadow upload" @tap="upload('photo')">上传列表照片</div>
       <div class="tips">每次上传图片张数越少越好 以免上传失败</div>
-      <div class="tips mar-b40">点击单张图片可以进行删除</div>
+      <div class="tips mar-b40">点击单张图片可以进行移动或删除</div>
+      <div class="tips mar-b40">首页仅显示前6张图片</div>
     </div>
   </div>
 </template>
@@ -93,6 +94,45 @@ export default {
           } else if (res.cancel) {
             console.log('用户点击取消')
           }
+        }
+      })
+    },
+    move (key, item, type) {
+      const currnetIndex = this.$data[key].indexOf(item)
+      const currentLength = this.$data[key].length
+      if ((currnetIndex === 0 && type === 1) || (currnetIndex === currentLength - 1 && type === 2)) {
+        console.log('无操作')
+        return 0
+      }
+      if (type === 1) {
+        this.$data[key].splice(currnetIndex, 1)
+        this.$data[key].splice(currnetIndex - 1, 0, item)
+      } else if (type === 2) {
+        this.$data[key].splice(currnetIndex, 1)
+        this.$data[key].splice(currnetIndex + 1, 0, item)
+      }
+      this.saveData({
+        [key]: this.$data[key]
+      })
+    },
+    tapImg (key, item) {
+      const that = this
+      const action = ['前移', '后移', '删除']
+      wx.showActionSheet({
+        itemList: action,
+        success (res) {
+          const a = action[res.tapIndex]
+          console.log(res.tapIndex, a)
+          if (a === '删除') {
+            that.del(key, item)
+          } else if (a === '前移') {
+            that.move(key, item, 1)
+          } else if (a === '后移') {
+            that.move(key, item, 2)
+          }
+        },
+        fail (res) {
+          console.log(res.errMsg)
         }
       })
     }
