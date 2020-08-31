@@ -40,7 +40,12 @@ const getUrl = ids => {
   })
 }
 const getFileName = name => {
-  // return name
+  name = name.replace(/^\s+|\s+$/, '').replace(/\s+/g, '_')
+  const arr = name.split('.').reverse()
+  return Math.random().toString(36).substr(2, 15) + '.' + arr[0]
+}
+
+const getOriginFileName = name => {
   name = name.replace(/^\s+|\s+$/, '').replace(/\s+/g, '_')
   const arr = name.split('.').reverse()
   return `${arr[1].replace(/[/:]/g, '')}.${arr[0]}`
@@ -86,28 +91,6 @@ const uploadImg = filePaths => {
   return resolve
 }
 
-const delImg = id => {
-  // 修改数据库
-  /* let page = getCurrentPages()
-  page = page[page.length - 1]
-  let { $photos } = page.data
-  $photos = $photos.filter(item => item.id !== id) */
-  del([id]).catch(null)
-}
-const del = ids => {
-  return new Promise((resolve, reject) => {
-    wx.cloud.deleteFile({
-      fileList: ids,
-      success: function ({ fileList }) {
-        resolve(fileList.map(item => item.fileID))
-      },
-      fail: function (err) {
-        reject(err)
-      }
-    })
-  })
-}
-
 const uploadMusic = (name, filePath) => {
   const fileName = getFileName(name)
   const cloudPath = `music/${fileName}`
@@ -122,7 +105,10 @@ const uploadMusic = (name, filePath) => {
     })
     .then(res => {
       const music = res[0]
-      return music.url
+      return {
+        name: getOriginFileName(name),
+        ...music
+      }
     })
     .then(res => {
       wx.showToast({
@@ -167,7 +153,6 @@ const uploadBackground = filePath => {
 
 export default {
   uploadImg,
-  delImg,
   uploadMusic,
   uploadBackground
 }

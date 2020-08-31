@@ -36,6 +36,9 @@ export default {
     this.globalData.innerAudioContext.onEnded(this.onEnded)
     this.globalData.innerAudioContext.onPlay(this.onPlay)
     this.globalData.innerAudioContext.onPause(this.onPause)
+    this.globalData.innerAudioContext.onError(function (error) {
+      console.log('播放错误', error)
+    })
     this.getList()
     const db = wx.cloud.database()
     const common = db.collection('common')
@@ -62,7 +65,7 @@ export default {
       if (this.globalData.index >= this.globalData.musics.length) {
         this.globalData.index = 0
       }
-      this.globalData.innerAudioContext.src = this.globalData.musics[this.globalData.index].musicUrl
+      this.globalData.innerAudioContext.src = encodeURI(this.globalData.musics[this.globalData.index].url)
       this.globalData.index += 1
     },
     audioPlay () {
@@ -99,16 +102,6 @@ export default {
           }
         }
         that.list = list
-      })
-    },
-    getMusicUrl () {
-      const that = this
-      const db = wx.cloud.database()
-      const music = db.collection('media')
-      music.get().then(res => {
-        that.globalData.innerAudioContext.src = res.data[0].musicUrl
-        that.audioCtx.play()
-        that.getList()
       })
     }
   },

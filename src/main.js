@@ -72,6 +72,6 @@ app.globalData.animations = [
 const db = wx.cloud.database()
 const media = db.collection('media')
 media.get().then(res => {
-  app.globalData.musics = res.data
-  innerAudioContext.src = app.globalData.musics[0].musicUrl
+  app.globalData.musics = res.data[0].musics
+  innerAudioContext.src = encodeURI(app.globalData.musics[0].url)
 })
