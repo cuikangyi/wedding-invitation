@@ -89,12 +89,14 @@ export default {
           'flip'
         ]
         for (let i = 0; i < res.data[0].index.length; i++) {
-          let show = i === 0
-          list.push({
-            url: res.data[0].index[i],
-            show: show,
-            class: animations[i]
-          })
+          if (i < animations.length) {
+            let show = i === 0
+            list.push({
+              url: res.data[0].index[i],
+              show: show,
+              class: animations[i]
+            })
+          }
         }
         that.list = list
       })
