@@ -1,6 +1,16 @@
 <template>
     <div class="index">
-        <image class="bg-image" :src="background"/>
+        <div class="bg-wrap">
+          <div class="bg-info">
+            <div class="content">
+              <h6>{{ info.title }}</h6>
+              <p>{{ info.date1 }}</p>
+              <p>{{ info.hotel }}</p>
+              <p>{{ info.address }}</p>
+              <!-- <image src="../../static/images/we.png" class="img_footer"/> -->
+            </div>
+          </div>
+        </div>
         <div class="bg-swiper">
             <index-swiper :list="list" :info="info"></index-swiper>
         </div>
@@ -28,7 +38,6 @@ export default {
       isPlay: false,
       list: [],
       info: {},
-      background: '',
       audioCtx: ''
     }
   },
@@ -44,10 +53,6 @@ export default {
     const common = db.collection('common')
     common.get().then(res => {
       this.info = res.data[0]
-    })
-    const media = db.collection('media')
-    media.get().then(res => {
-      this.background = res.data[0].background
     })
   },
   onShow () {
@@ -180,6 +185,25 @@ export default {
       animation musicStart 1s linear forwards
   #myAudio
     display none
-
-
+  .bg-info
+    width 630rpx
+    position absolute
+    bottom 50rpx
+    left 50rpx
+    padding 10rpx
+    .content
+      width 626rpx
+      display flex
+      flex-direction column
+      justify-content flex-start
+      align-items center
+      position relative
+      color #fff
+      h6
+        height 80rpx
+        line-height 80rpx
+      p
+        font-size 26rpx
+        height 50rpx
+        line-height 50rpx
 </style>

@@ -76,4 +76,9 @@ image
     position fixed
     width 100%
     height 100%
+.bg-wrap
+    position fixed
+    background linear-gradient(0deg, #ffc0cb 0%, #fff 60%)
+    width 100%
+    height 100%
 </style>

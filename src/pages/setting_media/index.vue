@@ -1,12 +1,6 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="bg-img">
-        <image :src="background" mode="heightFix"></image>
-      </div>
-      <div class="btn" @tap="chooseBackground">选择背景图</div>
-    </div>
-    <div class="row">
       <div class="music-list" v-for="(item, index) in musics" :key="index" @tap="tapMusic(item)">{{ item.name }}</div>
       <div class="btn" @tap="chooseMusic">选择音乐</div>
       <div class="tips">点击删除相应的行</div>
@@ -31,7 +25,6 @@ export default {
   data () {
     return {
       _id: '',
-      background: '',
       musics: [],
       videoUrl: '',
       message: ''
@@ -43,7 +36,6 @@ export default {
     media.get().then(res => {
       const data = res.data[0]
       this._id = data._id
-      this.background = data.background
       this.musics = data.musics
       this.videoUrl = data.videoUrl
       this.message = data.message
@@ -63,23 +55,6 @@ export default {
           title: '修改成功',
           icon: 'none'
         })
-      })
-    },
-    chooseBackground () {
-      const that = this
-      wx.chooseImage({
-        count: 1,
-        sizeType: ['original', 'compressed'],
-        sourceType: ['album'],
-        success (res) {
-          const tempFilePath = res.tempFilePaths[0]
-          upload.uploadBackground(tempFilePath).then(res => {
-            that.background = res
-            that.saveData({
-              background: that.background
-            })
-          })
-        }
       })
     },
     chooseMusic () {

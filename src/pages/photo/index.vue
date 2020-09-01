@@ -1,6 +1,6 @@
 <template>
     <div class="photo">
-      <image class="bg-image" :src="background"/>
+      <div class="bg-wrap"></div>
       <h-swiper :list="list" :isGif="isGif"></h-swiper>
     </div>
 </template>
@@ -15,11 +15,6 @@ export default {
   },
   onLoad () {
     this.getList()
-    const db = wx.cloud.database()
-    const media = db.collection('media')
-    media.get().then(res => {
-      this.background = res.data[0].background
-    })
   },
   onShow () {
     // const that = this
@@ -29,8 +24,7 @@ export default {
   data () {
     return {
       list: [],
-      isGif: false,
-      background: ''
+      isGif: false
     }
   },
   methods: {
