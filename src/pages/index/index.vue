@@ -108,6 +108,7 @@ export default {
 
   onShareAppMessage: function (res) {
     return {
+      title: `邀请您于${this.info.date1}参加${this.info.title}。`,
       path: '/pages/index/main'
     }
   }
